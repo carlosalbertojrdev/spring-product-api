@@ -3,6 +3,7 @@ package dev.carlosalbertojr.productapi.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,15 @@ public class ProductController {
                 .stream()
                 .map(ProductResponseDto::new)
                 .toList();
+    }
+
+    @GetMapping("/{id}")
+    public ProductResponseDto getById(@PathVariable String id) {
+        return productService.getByid(id)
+        .stream()
+        .map(ProductResponseDto::new)
+        .findFirst()
+        .orElseThrow(() -> new RuntimeException("product not found"));
     }
 
     @PostMapping
